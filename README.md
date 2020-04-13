@@ -1,6 +1,6 @@
-# example-1
+# Authentications
 
-> practice nuxt.js 
+> practice implement authentications features on nuxt.js 
 
 ## Build Setup
 
