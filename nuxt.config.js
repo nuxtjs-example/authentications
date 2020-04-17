@@ -1,3 +1,4 @@
+require('dotenv').config()
 
 module.exports = {
   mode: 'universal',
@@ -29,6 +30,7 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '~/plugins/vuelidate', ssr: true }
   ],
   /*
   ** Nuxt.js dev-modules
@@ -37,7 +39,8 @@ module.exports = {
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/dotenv'
   ],
   /*
   ** Nuxt.js modules
@@ -47,13 +50,31 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    '@nuxtjs/auth'
   ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+    baseUrl: process.env.BASE_URL
+  },
+  auth: {
+    redirect: {
+      login: '/login'
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/api/auth/login', method: 'post', propertyName: 'accessToken' },
+          user: false,
+          logout: false
+        },
+        tokenType: 'Bearer',
+        autoFetchUser: false
+      }
+    }
   },
   /*
   ** Build configuration
